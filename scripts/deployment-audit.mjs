@@ -9,7 +9,6 @@ const requiredFiles = [
   "package-lock.json",
   "next.config.js",
   "tsconfig.json",
-  ".env.example",
   "vercel.json",
   "app/layout.tsx",
   "app/page.tsx",
