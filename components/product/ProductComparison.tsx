@@ -3,17 +3,20 @@ import {
   getCoaStatusLabel,
   getProductStatusBadges,
   isAvailableNow,
+  isSoldOut,
 } from "@/lib/products/status";
 import type { Product } from "@/lib/products/types";
-import { formatMoney } from "@/lib/utils/format";
 import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
+import { ProductPrice } from "./ProductPrice";
 
 export function ProductComparison({
   products,
+  showFinderCta = true,
   title = "Compare the Farm Shelf",
 }: {
   products: Product[];
+  showFinderCta?: boolean;
   title?: string;
 }) {
   const comparisonProducts = getComparisonProducts(products);
@@ -39,9 +42,11 @@ export function ProductComparison({
             advice.
           </p>
         </div>
-        <ButtonLink href="/product-finder" variant="ghost">
-          Take Product Finder
-        </ButtonLink>
+        {showFinderCta && (
+          <ButtonLink href="/product-finder" variant="ghost">
+            Open Product Guide
+          </ButtonLink>
+        )}
       </div>
 
       <div className="mt-7 hidden overflow-hidden rounded-seed border border-forest-900/12 bg-cream-50 shadow-soft lg:block">
@@ -71,9 +76,13 @@ export function ProductComparison({
                   >
                     {product.name}
                   </Link>
-                  <p className="mt-1 text-xs font-bold text-forest-900/55">
-                    {formatMoney(product.price)}
-                  </p>
+                  <div className="mt-2">
+                    <ProductPrice
+                      product={product}
+                      showCompareAt={false}
+                      size="sm"
+                    />
+                  </div>
                 </Td>
                 <Td>{formatLabel(product)}</Td>
                 <Td>{bestFor(product)}</Td>
@@ -88,8 +97,14 @@ export function ProductComparison({
                   </Badge>
                 </Td>
                 <Td>
-                  <Badge tone={isAvailableNow(product) ? "green" : "dark"}>
-                    {isAvailableNow(product) ? "Available Now" : "Coming Soon"}
+                  <Badge
+                    tone={isAvailableNow(product) ? "green" : isSoldOut(product) ? "red" : "dark"}
+                  >
+                    {isAvailableNow(product)
+                      ? "Available Now"
+                      : isSoldOut(product)
+                        ? "Sold Out"
+                        : "Coming Soon"}
                   </Badge>
                 </Td>
                 <Td>
@@ -152,7 +167,6 @@ function getComparisonProducts(products: Product[]) {
     "CBG Oils",
     "Hemp Flower",
     "Seeds",
-    "Bundles",
   ];
 
   const selected: Product[] = [];
@@ -174,7 +188,6 @@ function formatLabel(product: Product) {
   if (product.category === "CBG Gummies") return "Gummy";
   if (product.category === "CBG Oils") return "Oil";
   if (product.category === "Hemp Flower") return "Flower";
-  if (product.category === "Bundles") return "Bundle";
   return product.category;
 }
 
@@ -184,7 +197,6 @@ function bestFor(product: Product) {
   if (product.category === "CBG Oils") return "Flexible serving format once label is final";
   if (product.category === "Hemp Flower") return "Plant-forward hemp flower experience";
   if (product.category === "Seeds") return "Seed and genetics planning";
-  if (product.category === "Bundles") return "Comparing formats or gifting another adult";
   return "Browsing the farm shelf";
 }
 

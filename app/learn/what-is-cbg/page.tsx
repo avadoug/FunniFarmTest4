@@ -112,12 +112,12 @@ export default function WhatIsCbgPage() {
         <div className="seed-card overflow-hidden rounded-seed">
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image
-              alt={farmImages.cbgGummiesLabelFacts.alt}
-              className="object-cover object-top"
+              alt={farmImages.funniFarmLogo.alt}
+              className="object-contain p-8"
               fill
               priority
               sizes="(min-width: 1024px) 42vw, 100vw"
-              src={farmImages.cbgGummiesLabelFacts.src}
+              src={farmImages.funniFarmLogo.src}
             />
           </div>
           <div className="p-5">

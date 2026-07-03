@@ -4,7 +4,7 @@ import { ChevronDown, Filter, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ProductCard } from "./ProductCard";
 import { isAvailableNow } from "@/lib/products/status";
-import { productCategories, type Product } from "@/lib/products/types";
+import type { Product } from "@/lib/products/types";
 import { cn } from "@/lib/utils/cn";
 
 const sortOptions = [
@@ -14,7 +14,7 @@ const sortOptions = [
   { label: "Newest", value: "newest" },
 ] as const;
 
-const productTypes = ["Gummies", "Softgels", "Tinctures", "Capsules", "Bundles", "Seeds"] as const;
+const productTypes = ["Gummies", "Softgels", "Tinctures", "Capsules", "Seeds"] as const;
 const strengths = ["Low (5-15mg)", "Moderate (16-30mg)", "High (31mg+)"] as const;
 const formulations = ["Full Spectrum", "Broad Spectrum", "Isolate"] as const;
 
@@ -32,6 +32,19 @@ export function ProductFilters({
   const [formulation, setFormulation] = useState("All");
   const [sort, setSort] = useState<(typeof sortOptions)[number]["value"]>(
     "featured",
+  );
+  const categoryItems = useMemo(
+    () => [
+      "All",
+      ...Array.from(
+        new Set(
+          products
+            .map((product) => product.category)
+            .filter((item) => item !== "Bundles"),
+        ),
+      ),
+    ],
+    [products],
   );
 
   const filtered = useMemo(() => {
@@ -85,6 +98,7 @@ export function ProductFilters({
       <aside className="hidden lg:block">
         <FilterPanel
           category={category}
+          categoryItems={categoryItems}
           formulation={formulation}
           productType={productType}
           resetFilters={resetFilters}
@@ -112,6 +126,7 @@ export function ProductFilters({
             <div className="mt-4">
               <FilterPanel
                 category={category}
+                categoryItems={categoryItems}
                 formulation={formulation}
                 productType={productType}
                 resetFilters={resetFilters}
@@ -191,6 +206,7 @@ export function ProductFilters({
 
 function FilterPanel({
   category,
+  categoryItems,
   formulation,
   productType,
   resetFilters,
@@ -201,6 +217,7 @@ function FilterPanel({
   strength,
 }: {
   category: string;
+  categoryItems: readonly string[];
   formulation: string;
   productType: string;
   resetFilters: () => void;
@@ -226,7 +243,7 @@ function FilterPanel({
       </div>
       <FilterGroup
         current={category}
-        items={["All", ...productCategories]}
+        items={categoryItems}
         onChange={setCategory}
         title="Category"
       />
@@ -294,7 +311,6 @@ function matchesProductType(product: Product, filter: string) {
   if (filter === "Softgels") return product.name.toLowerCase().includes("softgel");
   if (filter === "Tinctures") return product.category === "CBG Oils";
   if (filter === "Capsules") return product.category === "Capsules";
-  if (filter === "Bundles") return product.category === "Bundles";
   if (filter === "Seeds") return product.category === "Seeds";
   return true;
 }
@@ -317,7 +333,7 @@ function matchesStrength(product: Product, filter: string) {
 function matchesFormulation(product: Product, filter: string) {
   if (filter === "All") return true;
   if (filter === "Full Spectrum") {
-    return product.category === "Hemp Flower" || product.category === "Bundles";
+    return product.category === "Hemp Flower";
   }
   if (filter === "Broad Spectrum") {
     return product.tags.includes("CBG") && product.category !== "Hemp Flower";

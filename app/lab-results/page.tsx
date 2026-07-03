@@ -76,12 +76,12 @@ export default async function LabResultsPage() {
       <section className="mt-8 grid overflow-hidden rounded-[2rem] border border-forest-900/12 bg-cream-50 shadow-farm lg:grid-cols-[1.05fr_.95fr]">
         <div className="relative min-h-[18rem]">
           <Image
-            alt={farmImages.cbgGummiesLabelFacts.alt}
-            className="object-cover object-top"
+            alt={farmImages.batchTransparencyLogo.alt}
+            className="object-contain p-8"
             fill
             priority
             sizes="(min-width: 1024px) 52vw, 100vw"
-            src={farmImages.cbgGummiesLabelFacts.src}
+            src={farmImages.batchTransparencyLogo.src}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-900/46 via-transparent to-transparent" />
         </div>

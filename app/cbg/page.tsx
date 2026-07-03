@@ -56,11 +56,11 @@ export default function CbgPage() {
           <div className="seed-card overflow-hidden rounded-seed">
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
-                alt={farmImages.cbgGummiesLabelFacts.alt}
-                className="object-cover object-top"
+                alt={farmImages.funniFarmLogo.alt}
+                className="object-contain p-8"
                 fill
                 sizes="(min-width: 1024px) 38vw, 100vw"
-                src={farmImages.cbgGummiesLabelFacts.src}
+                src={farmImages.funniFarmLogo.src}
               />
             </div>
             <div className="p-5">

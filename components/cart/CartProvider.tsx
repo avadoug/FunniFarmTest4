@@ -11,7 +11,7 @@ import {
 } from "react";
 import type { Product } from "@/lib/products/types";
 import type { CartItem, CartProduct } from "@/lib/cart/types";
-import { isAvailableNow } from "@/lib/products/status";
+import { isAvailableNow, isSoldOut } from "@/lib/products/status";
 import { CartDrawer } from "./CartDrawer";
 import { cn } from "@/lib/utils/cn";
 
@@ -74,7 +74,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addItem = useCallback(
     (product: Product, quantity = 1) => {
       if (!isAvailableNow(product)) {
-        pushToast(`${product.name} is not open for order requests yet.`);
+        pushToast(
+          isSoldOut(product)
+            ? `${product.name} is sold out.`
+            : `${product.name} is not open for order requests yet.`,
+        );
         return;
       }
 

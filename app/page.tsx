@@ -18,7 +18,7 @@ import type { Product } from "@/lib/products/types";
 const bestSellerSlugs = [
   "funni-farm-cbg-gummies",
   "funni-farm-cbg-oil",
-  "cbg-starter-bundle",
+  "mega-cbg-gummy-bear",
   "funni-farm-cbg-capsules",
   "hemp-seed-pack",
 ];
@@ -30,7 +30,7 @@ const heroProducts = [
   },
   {
     label: "CBG Oil",
-    image: "/products/cbg-oil.svg",
+    image: "/images/products/funni-farm-cbg-oil-tincture.jpg",
   },
   {
     label: "CBG Capsules",
@@ -42,7 +42,7 @@ const orderSteps = [
   {
     icon: ShoppingBag,
     title: "Choose Your Products",
-    text: "Browse best sellers or use the Product Finder to find your fit.",
+    text: "Browse best sellers or compare formats in the Product Finder.",
   },
   {
     icon: ClipboardCheck,

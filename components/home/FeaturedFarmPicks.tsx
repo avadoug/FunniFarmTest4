@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Gift, SearchCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BadgeCheck, SearchCheck, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { ProductPrice, SoldOutStamp } from "@/components/product/ProductPrice";
 import {
   hasBatchSpecificCoa,
   isAvailableNow,
+  isSoldOut,
 } from "@/lib/products/status";
 import type { Product } from "@/lib/products/types";
-import { formatMoney } from "@/lib/utils/format";
 
 export function FeaturedFarmPicks({ products }: { products: Product[] }) {
   const picks = buildPicks(products);
@@ -55,14 +56,31 @@ export function FeaturedFarmPicks({ products }: { products: Product[] }) {
                 src={pick.product.image}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-900/52 via-transparent to-transparent" />
-              <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-                <Badge tone={isAvailableNow(pick.product) ? "green" : "dark"}>
-                  {isAvailableNow(pick.product) ? "Available Now" : "Coming Soon"}
+              <div className="absolute left-3 top-3 z-20 flex flex-wrap gap-2">
+                <Badge
+                  tone={
+                    isAvailableNow(pick.product)
+                      ? "green"
+                      : isSoldOut(pick.product)
+                        ? "red"
+                        : "dark"
+                  }
+                >
+                  {isAvailableNow(pick.product)
+                    ? "Available Now"
+                    : isSoldOut(pick.product)
+                      ? "Sold Out"
+                      : "Coming Soon"}
                 </Badge>
                 {hasBatchSpecificCoa(pick.product) && (
                   <Badge tone="gold">COA Available</Badge>
                 )}
               </div>
+              {isSoldOut(pick.product) && (
+                <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-cream-50/10 backdrop-blur-[1px]">
+                  <SoldOutStamp size="lg" />
+                </div>
+              )}
             </div>
             <div className="p-5">
               <pick.icon aria-hidden className="size-7 text-forest-700" />
@@ -76,9 +94,7 @@ export function FeaturedFarmPicks({ products }: { products: Product[] }) {
                 {pick.text}
               </p>
               <div className="mt-4 flex items-center justify-between gap-3">
-                <span className="font-black text-forest-900">
-                  {formatMoney(pick.product.price)}
-                </span>
+                <ProductPrice product={pick.product} size="sm" />
                 <span className="inline-flex items-center gap-1 text-sm font-black text-clay group-hover:text-forest-900">
                   Details
                   <ArrowRight aria-hidden className="size-4" />
@@ -110,16 +126,6 @@ function buildPicks(products: Product[]) {
     });
   }
 
-  const bundle = products.find((product) => product.category === "Bundles");
-  if (bundle) {
-    picks.push({
-      icon: Gift,
-      label: "Best for comparing formats",
-      product: bundle,
-      text: "A bundle listing for adults who want to compare farm shelf formats.",
-    });
-  }
-
   const lab = products.find(hasBatchSpecificCoa);
   if (lab) {
     picks.push({
@@ -132,11 +138,15 @@ function buildPicks(products: Product[]) {
 
   const comingSoon = products.find((product) => !isAvailableNow(product));
   if (comingSoon) {
+    const soldOut = isSoldOut(comingSoon);
+
     picks.push({
       icon: BadgeCheck,
-      label: "Coming soon spotlight",
+      label: soldOut ? "Sold out spotlight" : "Coming soon spotlight",
       product: comingSoon,
-      text: "A preview item waiting on final product details, batch records, or availability.",
+      text: soldOut
+        ? "A fast-moving item that has already sold through on the farm shelf."
+        : "A preview item waiting on final product details, batch records, or availability.",
     });
   }
 

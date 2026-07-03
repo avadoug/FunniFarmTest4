@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { ProductCard } from "@/components/product/ProductCard";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { ProductPrice } from "@/components/product/ProductPrice";
 import { ProductPurchasePanel } from "@/components/product/ProductPurchasePanel";
 import { ProductStickyCartBar } from "@/components/product/ProductStickyCartBar";
 import { TrustBar } from "@/components/brand/TrustBar";
@@ -26,6 +27,7 @@ import {
   getBatchStatusLabel,
   getCoaStatusLabel,
   hasBatchSpecificCoa,
+  isSoldOut,
 } from "@/lib/products/status";
 import type { Product } from "@/lib/products/types";
 import {
@@ -33,7 +35,6 @@ import {
   getProducts,
   getRelatedProducts,
 } from "@/lib/products/repository";
-import { formatMoney } from "@/lib/utils/format";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -79,6 +80,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   );
   const faqs = getProductFaqs(product);
   const hasCoa = hasBatchSpecificCoa(product);
+  const soldOut = isSoldOut(product);
 
   return (
     <div className="pb-24 md:pb-0">
@@ -99,7 +101,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </nav>
 
         <section className="mt-5 grid gap-8 rounded-[2rem] border border-forest-900/12 bg-cream-50 p-4 shadow-farm md:p-6 lg:grid-cols-[1fr_.95fr] lg:p-8">
-          <ProductGallery images={gallery} name={product.name} />
+          <ProductGallery images={gallery} name={product.name} soldOut={soldOut} />
 
           <div className="flex flex-col">
             <div className="flex flex-wrap gap-2">
@@ -123,14 +125,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
             <div className="mt-4 flex flex-wrap items-baseline gap-3">
-              <p className="text-3xl font-black text-forest-900">
-                {formatMoney(product.price)}
-              </p>
-              {product.compareAtPrice && (
-                <p className="text-lg font-bold text-forest-900/42 line-through">
-                  {formatMoney(product.compareAtPrice)}
-                </p>
-              )}
+              <ProductPrice product={product} size="xl" />
             </div>
             <p className="mt-5 text-base font-semibold leading-8 text-forest-900/74">
               {product.fullDescription}
@@ -391,7 +386,6 @@ function getReviewCount(product: Product) {
   const counts: Record<string, number> = {
     "funni-farm-cbg-gummies": 1248,
     "funni-farm-cbg-oil": 1012,
-    "cbg-starter-bundle": 692,
     "funni-farm-cbg-capsules": 623,
     "hemp-seed-pack": 412,
   };

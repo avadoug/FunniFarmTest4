@@ -8,6 +8,7 @@ import {
   getBatchStatusLabel,
   getCoaStatusLabel,
   isAvailableNow,
+  isSoldOut,
 } from "@/lib/products/status";
 import type { Product } from "@/lib/products/types";
 
@@ -15,6 +16,7 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
   const inStock = isAvailableNow(product);
+  const soldOut = isSoldOut(product);
 
   return (
     <div className="seed-card rounded-seed p-5">
@@ -26,7 +28,9 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
           <p className="mt-1 font-bold text-forest-900">
             {inStock
               ? `${product.inventory} available for order request`
-              : "Coming soon"}
+              : soldOut
+                ? "Sold out"
+                : "Coming soon"}
           </p>
         </div>
         <div className="flex items-center rounded-full border border-forest-900/15 bg-cream-50">
@@ -61,7 +65,7 @@ export function ProductPurchasePanel({ product }: { product: Product }) {
         size="lg"
       >
         <ShoppingBag aria-hidden className="size-5" />
-        {inStock ? "Start Order Review" : "Coming Soon"}
+        {inStock ? "Start Order Review" : soldOut ? "Sold Out" : "Coming Soon"}
       </Button>
       <div className="mt-4 grid gap-2 text-xs font-bold text-forest-900/70 sm:grid-cols-2">
         <span className="rounded-2xl border border-forest-900/10 bg-white/55 px-3 py-2">

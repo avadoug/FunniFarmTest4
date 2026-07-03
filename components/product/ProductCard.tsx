@@ -7,10 +7,14 @@ import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ProductQuickView } from "./ProductQuickView";
+import { ProductPrice, SoldOutStamp } from "./ProductPrice";
 import { useCart } from "@/components/cart/CartProvider";
 import type { Product } from "@/lib/products/types";
-import { getProductStatusBadges, isAvailableNow } from "@/lib/products/status";
-import { formatMoney } from "@/lib/utils/format";
+import {
+  getProductStatusBadges,
+  isAvailableNow,
+  isSoldOut,
+} from "@/lib/products/status";
 import { cn } from "@/lib/utils/cn";
 
 const WISHLIST_KEY = "funni-farm-wishlist";
@@ -20,6 +24,7 @@ export function ProductCard({ product }: { product: Product }) {
   const [favorite, setFavorite] = useState(false);
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const inStock = isAvailableNow(product);
+  const soldOut = isSoldOut(product);
   const statusBadges = getProductStatusBadges(product);
   const reviewCount = getReviewCount(product);
 
@@ -53,14 +58,14 @@ export function ProductCard({ product }: { product: Product }) {
               src={product.image}
             />
           </Link>
-          <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+          <div className="absolute left-3 top-3 z-20 flex flex-wrap gap-2">
             {statusBadges.slice(0, 2).map((badge) => (
               <Badge key={badge.label} tone={badge.tone}>
                 {badge.label}
               </Badge>
             ))}
           </div>
-          <div className="absolute right-3 top-3 flex gap-2">
+          <div className="absolute right-3 top-3 z-20 flex gap-2">
             <button
               aria-label={favorite ? "Remove from wishlist" : "Add to wishlist"}
               className={cn(
@@ -84,6 +89,11 @@ export function ProductCard({ product }: { product: Product }) {
               <Eye aria-hidden className="size-5" />
             </button>
           </div>
+          {soldOut && (
+            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-cream-50/12 backdrop-blur-[1px]">
+              <SoldOutStamp size="lg" />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-5">
@@ -115,20 +125,15 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
           <div className="mt-5 flex items-end justify-between gap-3">
             <div>
-              <p className="text-xl font-black text-forest-900">
-                {formatMoney(product.price)}
-              </p>
-              {product.compareAtPrice && (
-                <p className="text-xs font-bold text-forest-900/45 line-through">
-                  {formatMoney(product.compareAtPrice)}
-                </p>
-              )}
+              <ProductPrice product={product} />
             </div>
             <Button
               aria-label={
                 inStock
                   ? `Start order review for ${product.name}`
-                  : `${product.name} is coming soon`
+                  : soldOut
+                    ? `${product.name} is sold out`
+                    : `${product.name} is coming soon`
               }
               disabled={!inStock}
               onClick={() => addItem(product)}
@@ -137,7 +142,7 @@ export function ProductCard({ product }: { product: Product }) {
               variant={inStock ? "primary" : "ghost"}
             >
               <ShoppingBag aria-hidden className="size-5" />
-              {inStock ? "Start Order" : "Soon"}
+              {inStock ? "Start Order" : soldOut ? "Sold Out" : "Soon"}
             </Button>
           </div>
         </div>
@@ -165,7 +170,6 @@ function getReviewCount(product: Product) {
   const counts: Record<string, number> = {
     "funni-farm-cbg-gummies": 1248,
     "funni-farm-cbg-oil": 1012,
-    "cbg-starter-bundle": 692,
     "funni-farm-cbg-capsules": 623,
     "hemp-seed-pack": 412,
     "mega-cbg-gummy-bear": 87,

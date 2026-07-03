@@ -26,7 +26,7 @@ export default async function ShopPage({
     : "All";
   const initialCategory = productCategories.includes(
     requestedCategory as (typeof productCategories)[number],
-  )
+  ) && requestedCategory !== "Bundles"
     ? requestedCategory
     : "All";
 
@@ -56,12 +56,12 @@ export default async function ShopPage({
         </div>
         <div className="relative hidden aspect-[16/10] overflow-hidden rounded-seed border border-forest-900/12 bg-cream-50 shadow-soft lg:block">
           <Image
-            alt={farmImages.cbgGummiesFrontLogo.alt}
-            className="object-cover object-top"
+            alt={farmImages.funniFarmLogo.alt}
+            className="object-contain p-8"
             fill
             priority
             sizes="360px"
-            src={farmImages.cbgGummiesFrontLogo.src}
+            src={farmImages.funniFarmLogo.src}
           />
         </div>
       </section>

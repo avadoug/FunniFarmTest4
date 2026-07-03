@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
 
-type BadgeTone = "green" | "gold" | "purple" | "dark" | "cream";
+type BadgeTone = "green" | "gold" | "purple" | "dark" | "cream" | "red";
 
 const tones: Record<BadgeTone, string> = {
   green: "border-forest-700/20 bg-forest-700 text-cream-50",
@@ -9,6 +9,7 @@ const tones: Record<BadgeTone, string> = {
   purple: "border-berry/20 bg-berry text-cream-50",
   dark: "border-ink/20 bg-ink text-cream-50",
   cream: "border-forest-700/20 bg-cream-50 text-forest-900",
+  red: "border-red-700/20 bg-red-700 text-cream-50",
 };
 
 export function Badge({

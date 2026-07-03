@@ -11,7 +11,6 @@ const linkGroups = [
       ["Gummies", "/shop?category=CBG%20Gummies"],
       ["Oils", "/shop?category=CBG%20Oils"],
       ["Capsules", "/shop?category=Capsules"],
-      ["Bundles", "/shop?category=Bundles"],
       ["Seeds", "/shop?category=Seeds"],
     ],
   },

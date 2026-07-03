@@ -7,14 +7,15 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useCart } from "@/components/cart/CartProvider";
+import { ProductPrice, SoldOutStamp } from "./ProductPrice";
 import type { Product } from "@/lib/products/types";
 import {
   getBatchStatusLabel,
   getCoaStatusLabel,
   getProductStatusBadges,
   isAvailableNow,
+  isSoldOut,
 } from "@/lib/products/status";
-import { formatMoney } from "@/lib/utils/format";
 
 export function ProductQuickView({
   onClose,
@@ -25,6 +26,7 @@ export function ProductQuickView({
 }) {
   const { addItem } = useCart();
   const inStock = isAvailableNow(product);
+  const soldOut = isSoldOut(product);
   const statusBadges = getProductStatusBadges(product);
 
   useEffect(() => {
@@ -58,6 +60,11 @@ export function ProductQuickView({
               sizes="(min-width: 768px) 420px, 90vw"
               src={product.image}
             />
+            {soldOut && (
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-cream-50/12 backdrop-blur-[1px]">
+                <SoldOutStamp size="xl" />
+              </div>
+            )}
           </div>
           <div>
             <div className="flex flex-wrap gap-2">
@@ -81,9 +88,9 @@ export function ProductQuickView({
             <p className="mt-2 text-sm font-black uppercase tracking-[0.16em] text-clay">
               {product.category}
             </p>
-            <p className="mt-4 text-2xl font-black text-forest-900">
-              {formatMoney(product.price)}
-            </p>
+            <div className="mt-4">
+              <ProductPrice product={product} size="lg" />
+            </div>
             <p className="mt-4 leading-7 text-forest-900/72">
               {product.shortDescription}
             </p>
@@ -104,7 +111,11 @@ export function ProductQuickView({
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button disabled={!inStock} onClick={() => addItem(product)}>
-                {inStock ? "Add to Order Request" : "Coming Soon"}
+                {inStock
+                  ? "Add to Order Request"
+                  : soldOut
+                    ? "Sold Out"
+                    : "Coming Soon"}
               </Button>
               <Link
                 className="focus-ring inline-flex min-h-11 items-center justify-center rounded-full border border-forest-700/20 px-4 py-2.5 text-sm font-bold text-forest-900 hover:bg-forest-700/10"
