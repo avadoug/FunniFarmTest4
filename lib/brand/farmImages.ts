@@ -1,15 +1,23 @@
 export const farmImages = {
+  funniFarmLogo: {
+    alt: "FunniFarms logo",
+    src: "/brand/funni-farm-official-logo.png",
+  },
+  batchTransparencyLogo: {
+    alt: "FunniFarms logo for batch transparency",
+    src: "/brand/funni-farm-official-logo.png",
+  },
   gummyTraysRainbow: {
     alt: "Rows of colorful small-batch gummies setting on parchment-lined trays.",
     src: "/images/farm/gummy-trays-rainbow.webp",
   },
   megaGummyBearRed: {
-    alt: "Large sugar-coated CBG gummy bear on parchment paper.",
-    src: "/images/products/mega-cbg-gummy-bear-red-card.webp",
+    alt: "Large red sugar-coated CBG gummy bear with a lighter for size reference.",
+    src: "/images/farm/mega-cbg-gummy-bear-red-lighter.jpg",
   },
   megaGummyBearBlue: {
-    alt: "Large blue sugar-coated CBG gummy bear on parchment paper.",
-    src: "/images/products/mega-cbg-gummy-bear-blue-card.webp",
+    alt: "Large blue sugar-coated CBG gummy bear with a lighter for size reference.",
+    src: "/images/farm/mega-cbg-gummy-bear-blue-lighter.jpg",
   },
   hempFieldSun: {
     alt: "Sunlit rows of hemp plants growing in a Tennessee field.",
@@ -48,11 +56,11 @@ export const farmImages = {
     src: "/images/farm/hershey-fence-wide.webp",
   },
   cbgGummiesLabelCard: {
-    alt: "The Funni Farm CBG Gummies mixed fruit label with Hershey mascot and serving details.",
+    alt: "FunniFarms CBG Gummies label",
     src: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
   },
   cbgGummiesFrontLogo: {
-    alt: "The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.",
+    alt: "FunniFarms CBG Gummies label",
     src: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
   },
   cbgGummiesBrandWide: {
@@ -60,11 +68,11 @@ export const farmImages = {
     src: "/images/products/funni-farm-cbg-gummies-brand-wide.webp",
   },
   cbgGummiesLabelFull: {
-    alt: "The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.",
+    alt: "FunniFarms CBG Gummies label",
     src: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
   },
   cbgGummiesLabelFacts: {
-    alt: "The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.",
+    alt: "FunniFarms CBG Gummies label",
     src: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
   },
   cbgGummiesComplianceStrip: {

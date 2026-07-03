@@ -42,11 +42,9 @@ export const productLabelFacts: Record<string, ProductLabelFacts> = {
     title: "Label-backed gummy details",
     eyebrow: "From the attached product label",
     image: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
-    imageAlt:
-      "The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.",
+    imageAlt: "FunniFarms CBG Gummies label",
     logoImage: "/images/products/funni-farm-cbg-gummies-front-logo.webp",
-    logoImageAlt:
-      "The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.",
+    logoImageAlt: "FunniFarms CBG Gummies label",
     complianceImage: "/images/products/funni-farm-cbg-gummies-compliance-strip.webp",
     complianceImageAlt:
       "The Funni Farm CBG Gummies bottom label strip showing hemp-derived and 21+ adult-use details.",

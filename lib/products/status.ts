@@ -3,12 +3,13 @@ import type { Product } from "./types";
 export type ProductStatusBadge = {
   label:
     | "Available Now"
+    | "Sold Out"
     | "Coming Soon"
     | "COA Available"
     | "COA Pending"
     | "Batch details coming soon"
     | "Not Applicable";
-  tone: "green" | "gold" | "purple" | "dark" | "cream";
+  tone: "green" | "gold" | "purple" | "dark" | "cream" | "red";
 };
 
 const unresolvedPattern = /\b(placeholder|pending)\b/i;
@@ -41,11 +42,17 @@ export function isAvailableNow(product: Product) {
   return product.isActive && product.inventory > 0;
 }
 
+export function isSoldOut(product: Product) {
+  return product.isActive && product.inventory <= 0;
+}
+
 export function getProductStatusBadges(product: Product): ProductStatusBadge[] {
   const badges: ProductStatusBadge[] = [
     isAvailableNow(product)
       ? { label: "Available Now", tone: "green" }
-      : { label: "Coming Soon", tone: "dark" },
+      : isSoldOut(product)
+        ? { label: "Sold Out", tone: "red" }
+        : { label: "Coming Soon", tone: "dark" },
   ];
 
   if (requiresCoa(product)) {

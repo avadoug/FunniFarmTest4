@@ -7,19 +7,19 @@
 - Alt text: Rows of colorful small-batch gummies setting on parchment-lined trays.
 - Reason: Shows real batch work without making the product feel childish or generic.
 
-## mega-gummy-bear-red.webp
+## mega-cbg-gummy-bear-blue-lighter.jpg
 - Best use: Primary product image for Mega CBG Gummy Bear.
-- Page/section: Product cards, product detail, cart, quick view.
+- Page/section: Product cards, product detail, cart, quick view, and bundle gallery.
 - Display size: Product image/card image.
-- Alt text: Large sugar-coated CBG gummy bear on parchment paper.
-- Reason: Gives the gummy product a real photo while cropping out unrelated scale objects.
+- Alt text: Large blue sugar-coated CBG gummy bear with a lighter for size reference.
+- Reason: Shows the Mega CBG Gummy Bear with the lighter visible for scale.
 
-## mega-gummy-bear-blue.webp
-- Best use: Supporting product gallery image for Mega CBG Gummy Bear.
-- Page/section: Product detail gallery.
-- Display size: Gallery image.
-- Alt text: Large blue sugar-coated CBG gummy bear on parchment paper.
-- Reason: Adds product variety and texture without changing the product flow.
+## mega-cbg-gummy-bear-red-lighter.jpg
+- Best use: Secondary switchable product image for Mega CBG Gummy Bear.
+- Page/section: Product detail gallery and bundle gallery.
+- Display size: Product image/gallery image.
+- Alt text: Large red sugar-coated CBG gummy bear with a lighter for size reference.
+- Reason: Lets shoppers compare the second gummy photo while keeping the lighter visible for scale.
 
 ## hemp-field-sun.webp
 - Best use: Scenic farm-growing visual.
@@ -95,6 +95,13 @@
 - Display size: Wide product logo panel.
 - Alt text: The Funni Farm CBG Gummies front label branding with mixed fruit flavor, Hershey mascot, and CBG serving details.
 - Reason: Shows the product logo system, flavor, count, CBG serving details, and Hershey mascot in one strong brand image.
+
+## funni-farm-cbg-oil-tincture.jpg
+- Best use: Primary product image for CBG Oil Tincture.
+- Page/section: Product cards, product detail, cart, quick view, checkout, and homepage product strip.
+- Display size: Product image/card image.
+- Alt text: Dark glass CBG oil tincture bottle with dropper cap.
+- Reason: Shows the actual tincture bottle instead of placeholder artwork so shoppers know what they are getting.
 
 ## funni-farm-cbg-gummies-brand-wide.webp
 - Best use: Cropped logo-style brand strip for future category tiles, ads, and product banners.
